@@ -51,10 +51,15 @@ flowchart LR
 
 ### Por capacidade
 
-- Abordagem para registro de atividades: `POST /api/activities` valida `userId` e `teamId` como ObjectId de registros existentes antes de criar. `points` e `occurredAt` são calculados no serviço, não enviados pelo cliente.
+- Abordagem para registro de atividades: `POST /api/activities` valida que `userId` e `teamId` são ObjectIds de registros existentes e que `teamId` é a equipe atual da pessoa; caso contrário responde `4xx`. `occurredAt` é opcional e, quando ausente, recebe a data atual. `points` é calculado no serviço, não enviado pelo cliente.
 - Abordagem para gerenciamento de equipes: `POST /api/teams` exige `name` e rejeita ausência com `400`. `mascot` e os integrantes são persistidos como enviados. `GET /api/teams` lista as equipes com integrantes.
 - Abordagem para o placar: agregação no MongoDB pela soma de `points` das atividades de cada equipe, em ordem decrescente, com `rank` iniciando em 1. Equipes sem atividades aparecem com `totalPoints` 0.
 - Abordagem para sugestões de treino: o serviço localiza a pessoa pelo e-mail (`404` se não existir), calcula o padrão recente de atividades e retorna `focus` e `reason` coerentes com a meta ou a atividade recente.
+
+### Relacionamentos
+
+- **Pertencimento a equipe**: `User.team` é a fonte de verdade. `Team.members` é sincronizado pela camada de serviço ao criar ou trocar a equipe de uma pessoa, e o seed segue a mesma regra.
+- **Equipe da atividade**: a atividade guarda a equipe do momento do registro (histórico). Se a pessoa trocar de equipe, as atividades anteriores continuam atribuídas à equipe original, e o placar soma por essa equipe.
 
 ### Ordem de implementação
 
