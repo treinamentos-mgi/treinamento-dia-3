@@ -26,7 +26,7 @@ Os esquemas Mongoose devem expressar as regras das quais o restante da aplicaç�
    > npm run test:data --prefix octofit-tracker/backend
    > ```
 
-1. Carregue os registros representativos no MongoDB do Codespace e execute o comando duas vezes para confirmar que ele é idepotente.
+1. Carregue os registros representativos no MongoDB do Codespace e execute o comando duas vezes para confirmar que ele é idempotently.
 
    > ![Static Badge](https://img.shields.io/badge/Terminal-text?logo=gnometerminal&labelColor=0969da&color=ddf4ff)
    >
@@ -41,7 +41,7 @@ Os esquemas Mongoose devem expressar as regras das quais o restante da aplicaç�
 <summary>Está com dificuldades? 🤷</summary><br/>
 
 - Use os modelos Mongoose, não scripts diretos do MongoDB.
-- Insira dados para as quatro capacidades e mantenha idepotentes as execuções repetidas do seed.
+- Insira dados para as quatro capacidades e mantenha idempotentlys as execuções repetidas do seed.
 - Investigue a primeira asserção que falha, em vez de regenerar todos os modelos.
 
 </details>
