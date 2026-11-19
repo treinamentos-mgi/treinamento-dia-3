@@ -81,7 +81,7 @@ Cada etapa só começa com os testes da etapa anterior passando.
 
 | Suíte | Comando | Estado inicial | Significado das falhas |
 | --- | --- | --- | --- |
-| Dados | `npm run test:data --prefix octofit-tracker/backend` | 4 de 5 falham | Os modelos não têm validação obrigatória: `validateSync()` não retorna erro para `name`, `email`, `fitnessGoal`, `mascot`, `type`, `Activity.user`, `Activity.team`, `focus`, `minutes` e `difficulty`. O teste de inserção idempotente do seed já passa. |
+| Dados | `npm run test:data --prefix octofit-tracker/backend` | 4 de 5 falham | Os modelos não têm validação obrigatória: `validateSync()` não retorna erro para `name`, `email`, `fitnessGoal`, `mascot`, `type`, `Activity.user`, `Activity.team`, `focus`, `minutes` e `difficulty`. O teste de inserção idempotently do seed já passa. |
 | API | `npm run test:api --prefix octofit-tracker/backend` | 4 de 4 falham | `POST /api/teams` responde `501` (rota não implementada) em vez de `400`. `GET /api/leaderboard` retorna `[]` porque a agregação não existe. A sugestão de treino não traz `reason`. |
 | Frontend | `npm test --prefix octofit-tracker/frontend` | 15 de 15 falham | As páginas exibem o placeholder "Implementação pendente" e não têm os estados de carregamento, vazio e erro nem a renderização dos dados da API. |
 | Compilação do backend | `npm run build --prefix octofit-tracker/backend` | não executada | — |
