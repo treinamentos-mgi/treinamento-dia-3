@@ -45,16 +45,16 @@ flowchart LR
 
 ### Por camada
 
-- **Apresentação**: as páginas só consomem o cliente compartilhado da API. Cada página implementa os estados de carregamento (`role="status"`), vazio e erro (`role="alert"`) antes de renderizar os dados. Nenhuma página acessa o MongoDB ou calcula pontos.
-- **Lógica**: as rotas delegam às funções de serviço. Entradas inválidas são rejeitadas com `400` (dados ausentes) ou `4xx` (IDs malformados ou inexistentes), nunca com `500`. Não há autenticação neste exercício.
-- **Dados**: validações obrigatórias nos modelos Mongoose (`User`, `Team`, `Activity`, `Workout`). Os dados são criados pelo código da aplicação e pelo `seed.ts`, sem scripts diretos no MongoDB.
+- Decisão da camada de apresentação: as páginas só consomem o cliente compartilhado da API. Cada página implementa os estados de carregamento (`role="status"`), vazio e erro (`role="alert"`) antes de renderizar os dados. Nenhuma página acessa o MongoDB ou calcula pontos.
+- Decisão da camada de lógica: as rotas delegam às funções de serviço. Entradas inválidas são rejeitadas com `400` (dados ausentes) ou `4xx` (IDs malformados ou inexistentes), nunca com `500`. Não há autenticação neste exercício.
+- Decisão da camada de dados: validações obrigatórias nos modelos Mongoose (`User`, `Team`, `Activity`, `Workout`). Os dados são criados pelo código da aplicação e pelo `seed.ts`, sem scripts diretos no MongoDB.
 
 ### Por capacidade
 
-- **Registro de atividades**: `POST /api/activities` valida `userId` e `teamId` como ObjectId de registros existentes antes de criar. `points` e `occurredAt` são calculados no serviço, não enviados pelo cliente.
-- **Equipes**: `POST /api/teams` exige `name` e rejeita ausência com `400`. `mascot` e os integrantes são persistidos como enviados. `GET /api/teams` lista as equipes com integrantes.
-- **Placar**: agregação no MongoDB pela soma de `points` das atividades de cada equipe, em ordem decrescente, com `rank` iniciando em 1. Equipes sem atividades aparecem com `totalPoints` 0.
-- **Sugestões de treino**: o serviço localiza a pessoa pelo e-mail (`404` se não existir), calcula o padrão recente de atividades e retorna `focus` e `reason` coerentes com a meta ou a atividade recente.
+- Abordagem para registro de atividades: `POST /api/activities` valida `userId` e `teamId` como ObjectId de registros existentes antes de criar. `points` e `occurredAt` são calculados no serviço, não enviados pelo cliente.
+- Abordagem para gerenciamento de equipes: `POST /api/teams` exige `name` e rejeita ausência com `400`. `mascot` e os integrantes são persistidos como enviados. `GET /api/teams` lista as equipes com integrantes.
+- Abordagem para o placar: agregação no MongoDB pela soma de `points` das atividades de cada equipe, em ordem decrescente, com `rank` iniciando em 1. Equipes sem atividades aparecem com `totalPoints` 0.
+- Abordagem para sugestões de treino: o serviço localiza a pessoa pelo e-mail (`404` se não existir), calcula o padrão recente de atividades e retorna `focus` e `reason` coerentes com a meta ou a atividade recente.
 
 ### Ordem de implementação
 
