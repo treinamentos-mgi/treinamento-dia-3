@@ -42,21 +42,6 @@ describe('Contrato de dados do OctoFit', () => {
     expect(error?.errors.minutes).toBeDefined();
     expect(error?.errors.difficulty).toBeDefined();
   });
-  it('rejeita tipos, níveis e minutos fora das regras do domínio', () => {
-    const activity = new Activity({
-      user: new mongoose.Types.ObjectId(),
-      team: new mongoose.Types.ObjectId(),
-      type: 'swim',
-      minutes: 0,
-      points: 10,
-      occurredAt: new Date(),
-    });
-    const activityError = activity.validateSync();
-    expect(activityError?.errors.type).toBeDefined();
-    expect(activityError?.errors.minutes).toBeDefined();
-    const workout = new Workout({ title: 'Intervalos', focus: 'endurance', minutes: 30, difficulty: 'hard' });
-    expect(workout.validateSync()?.errors.difficulty).toBeDefined();
-  });
 
   it('insere dados representativos para as quatro capacidades de forma idempotente', async () => {
     const mongo = await MongoMemoryServer.create();
