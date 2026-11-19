@@ -60,6 +60,8 @@ flowchart LR
 
 - **Pertencimento a equipe**: `User.team` é a fonte de verdade. `Team.members` é sincronizado pela camada de serviço ao criar ou trocar a equipe de uma pessoa, e o seed segue a mesma regra.
 - **Equipe da atividade**: a atividade guarda a equipe do momento do registro (histórico). Se a pessoa trocar de equipe, as atividades anteriores continuam atribuídas à equipe original, e o placar soma por essa equipe.
+- **Regras de validação**: `User.email` e `Team.name` são únicos. `User.fitnessGoal` e `Workout.focus` aceitam `endurance`, `strength` ou `mobility`. `Activity.type` aceita `run`, `cycle`, `walk` ou `strength`. `Workout.difficulty` aceita `easy` ou `moderate`. `minutes` fica entre 1 e 1440. `points` é no mínimo 0.
+- **Pontos**: no MVP, `points` = `minutes` da atividade, calculado no serviço e nunca enviado pelo cliente.
 
 ### Ordem de implementação
 
