@@ -1,5 +1,10 @@
+import { Types } from 'mongoose';
 import { connectDatabase, disconnectDatabase } from '../config/database.js';
 import { Activity, Team, User, Workout } from '../models/index.js';
+
+// IDs fixos mantêm a chave de upsert estável mesmo que os valores de demonstração mudem.
+const MONA_RUN_FIXTURE_ID = new Types.ObjectId('6a0000000000000000000001');
+const HUBOT_CYCLE_FIXTURE_ID = new Types.ObjectId('6a0000000000000000000002');
 
 // Insere registros de demonstração estáveis sem apagar dados da aplicação.
 async function upsertDemoUser(name: string, email: string, teamId: InstanceType<typeof Team>['_id'], fitnessGoal: string) {
@@ -35,12 +40,12 @@ export async function seed() {
     const monaRunAt = new Date('2026-01-10T12:00:00.000Z');
     const hubotCycleAt = new Date('2026-01-11T12:00:00.000Z');
     await Activity.updateOne(
-      { user: mona._id, team: octocats._id, type: 'run', occurredAt: monaRunAt },
+      { _id: MONA_RUN_FIXTURE_ID },
       { $set: { user: mona._id, team: octocats._id, type: 'run', minutes: 40, points: 40, occurredAt: monaRunAt } },
       { upsert: true },
     );
     await Activity.updateOne(
-      { user: hubot._id, team: robocats._id, type: 'cycle', occurredAt: hubotCycleAt },
+      { _id: HUBOT_CYCLE_FIXTURE_ID },
       { $set: { user: hubot._id, team: robocats._id, type: 'cycle', minutes: 25, points: 25, occurredAt: hubotCycleAt } },
       { upsert: true },
     );
